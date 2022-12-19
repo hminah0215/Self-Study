@@ -3,22 +3,50 @@ import * as express from 'express';
 // import { Cat, CatType } from './cats/cats.model';
 import catsRouter from './cats/cats.route';
 
+class Server {
+  public app: express.Application;
+
+  constructor() {
+    const app: express.Application = express();
+    this.app = app;
+  }
+
+  private setRoute() {
+    // 분리한 라우터 등록
+    this.app.use(catsRouter);
+  }
+
+  private setMiddleware() {
+    // 미들웨어는 순서가 중요!
+    this.app.use((req, res, next) => {
+      console.log(req.rawHeaders[1]);
+      console.log('로깅하는 미들웨어닷');
+      next(); // 라우터를 찾도록 next 함수
+    });
+
+    // json 미들웨어
+    this.app.use(express.json());
+
+    this.setRoute();
+  }
+
+  public listen() {
+    this.setMiddleware();
+    this.app.listen(8000, () => {
+      console.log('server is on...');
+    });
+  }
+}
+
+function init() {
+  const server = new Server();
+  server.listen();
+}
+init();
+
 const app: express.Express = express();
 
 // const data = [1, 2, 3, 4];
-
-// 미들웨어는 순서가 중요!
-app.use((req, res, next) => {
-  console.log(req.rawHeaders[1]);
-  console.log('로깅하는 미들웨어닷');
-  next(); // 라우터를 찾도록 next 함수
-});
-
-// json 미들웨어
-app.use(express.json());
-
-// 분리한 라우터 등록
-app.use(catsRouter);
 
 /*
 app.get('/cats/som', (req, res, next) => {
@@ -52,7 +80,3 @@ app.use((req, res, next) => {
   next();
 });
 */
-
-app.listen(8000, () => {
-  console.log('server is on...');
-});
