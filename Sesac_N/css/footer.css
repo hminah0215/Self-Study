@@ -1,0 +1,30 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+/* 헤더와 푸터를 제외한 모든부분이 메인이 되도록 */
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: var(--light-gray);
+  height: 3rem;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  font-size: 1.6rem;
+  line-height: 3rem;
+  gap: 1rem;
+  /* flex에서 사용가능한 gap속성 대신 
+  .author {margin-right : 1rem; } 이렇게 처리해도 결과는 같음 */
+}
