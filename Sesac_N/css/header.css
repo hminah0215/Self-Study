@@ -5,6 +5,10 @@
   --dark-gray: #606060;
 }
 
+.blue {
+  color: var(--main-blue);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -98,4 +102,10 @@ header {
 
 .dropdown:hover .dropdown-content {
   display: block;
+}
+
+@media only all and(max-width: 400px) {
+  html {
+    font-size: 8px;
+  }
 }
